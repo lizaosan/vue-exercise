@@ -159,22 +159,24 @@
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="#">全部</a>
+          <a class="nav-link" :class="{'active': visibility == 'all'}" @click="visibility = 'all'" href="#">全部</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="#">進行中</a>
+          <a class="nav-link" :class="{'active': visibility == 'active'}" @click="visibility = 'active'" href="#">進行中</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">已完成</a>
+          <a class="nav-link" :class="{'active': visibility == 'completed'}" @click="visibility = 'completed'" href="#">已完成</a>
         </li>
       </ul>
     </div>
     <ul class="list-group list-group-flush text-left">
-      <li class="list-group-item" v-for="(item, key) in todos">
+      <li class="list-group-item" v-for="(item, key) in filteredTodos">
         <div class="d-flex">
           <div class="form-check">
             <input type="checkbox" class="form-check-input" v-model="item.completed" :id="item.id">
-            <label class="form-check-label" :for="item.id">
+            <label class="form-check-label"
+            :class="{'completed': item.completed}"
+            :for="item.id">
               {{ item.title }}
             </label>
           </div>
@@ -219,6 +221,7 @@ var app = new Vue({
         completed: false,
       }
     ],
+    visibility: 'all'
   },
 
 
@@ -239,7 +242,31 @@ var app = new Vue({
     removeTodo: function(key) {
       this.todos.splice(key, 1) //刪除陣列上的 1 筆資料
     }
+  },
+computed:{
+  filteredTodos: function() {
+    if (this.visibility == 'all'){
+      return this.todos;
+    } else if (this.visibility == 'active') {
+      var newTodos = [];
+      this.todos.forEach(function (item) {
+        if (!item.completed) { // 找出未完成的 item，新增到 newTodos 裡面
+          newTodos.push(item);
+        }
+      })
+      return newTodos;
+    } else if (this.visibility == 'completed') {
+      var newTodos = [];
+      this.todos.forEach(function (item) {
+        if (item.completed) { // 找出未完成的 item，新增到 newTodos 裡面
+          newTodos.push(item);
+        }
+      })
+      return newTodos;
+    }
+    return []; // ★假設是其他的話，直接回傳一個空陣列，確認過濾是可以使用的，確保發生意外時還能正常運作
   }
+}
 });
 </script>
 
