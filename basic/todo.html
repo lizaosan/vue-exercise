@@ -195,8 +195,8 @@
       </li> -->
     </ul>
     <div class="card-footer d-flex justify-content-between">
-      <span>還有 3 筆任務未完成</span>
-      <a href="#">清除所有任務</a>
+      <span>還有 {{ lastTodos }} 筆任務未完成</span>
+      <a href="#" @click="removeAll">清除所有任務</a>
     </div>
   </div>
 </div>
@@ -241,8 +241,10 @@ var app = new Vue({
           newIndex = key;
         }
       });
-
       this.todos.splice(newIndex, 1) // 刪除陣列上的 1 筆資料
+    },
+    removeAll: function() {
+      this.todos = []
     },
     editTodo: function(item) {
       this.cacheTodo = item;
@@ -272,14 +274,23 @@ computed:{
     } else if (this.visibility == 'completed') {
       var newTodos = [];
       this.todos.forEach(function (item) {
-        if (item.completed) { // 找出未完成的 item，新增到 newTodos 裡面
+        if (item.completed) { // 找出已完成的 item，新增到 newTodos 裡面
           newTodos.push(item);
         }
       })
       return newTodos;
     }
     return []; // 假設是其他意外狀況，直接回傳一個空陣列，確認過濾是可以使用的，確保發生意外時還能正常運作
-  }
+  },
+  lastTodos: function(){
+    var lastTodos = [];
+    this.todos.forEach(function (item){
+      if(!item.completed){
+        lastTodos.push(item);
+      }
+    })
+    return lastTodos.length;
+  },
 }
 });
 </script>
