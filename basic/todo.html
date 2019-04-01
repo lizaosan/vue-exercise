@@ -170,7 +170,7 @@
       </ul>
     </div>
     <ul class="list-group list-group-flush text-left">
-      <li class="list-group-item" v-for="item in todos">
+      <li class="list-group-item" v-for="(item, key) in todos">
         <div class="d-flex">
           <div class="form-check">
             <input type="checkbox" class="form-check-input" v-model="item.completed" :id="item.id">
@@ -178,7 +178,7 @@
               {{ item.title }}
             </label>
           </div>
-          <button type="button" class="close ml-auto" aria-label="Close">
+          <button type="button" class="close ml-auto" aria-label="Close" @click="removeTodo(key)">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -221,19 +221,23 @@ var app = new Vue({
     ],
   },
 
-  // methods 把輸入內容的 value push 到 todos 並給予 id, title 和 預設為 false 的 completed
 
-  methods: {
+  methods: {   // methods 把輸入內容的 value push 到 todos 並給予 id, title 和 預設為 false 的 completed
     addTodo: function(){
-      var value = this.newTodo;
+      var value = this.newTodo.trim();  // trim 刪除多餘空白
       var timestamp = Math.floor(Date.now());
-      console.log(value, timestamp);
+      if (!value){ // !value 若 value 為空則直接return
+        return;
+      }
       this.todos.push({
         id: timestamp,
         title: value,
         completed: false,
       });
       this.newTodo = ''; // 輸入後自動把輸入框的文字清除
+    },
+    removeTodo: function(key) {
+      this.todos.splice(key, 1) //刪除陣列上的 1 筆資料
     }
   }
 });
