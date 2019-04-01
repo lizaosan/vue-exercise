@@ -180,7 +180,7 @@
               {{ item.title }}
             </label>
           </div>
-          <button type="button" class="close ml-auto" aria-label="Close" @click="removeTodo(key)">
+          <button type="button" class="close ml-auto" aria-label="Close" @click="removeTodo(item)">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -233,8 +233,16 @@ var app = new Vue({
       });
       this.newTodo = ''; // 輸入後自動把輸入框的文字清除
     },
-    removeTodo: function(key) {
-      this.todos.splice(key, 1) // 刪除陣列上的 1 筆資料
+    removeTodo: function(todo) {
+      var newIndex = '';
+      var vm = this;
+      vm.todos.forEach(function(item, key){
+        if (todo.id === item.id) {
+          newIndex = key;
+        }
+      });
+
+      this.todos.splice(newIndex, 1) // 刪除陣列上的 1 筆資料
     },
     editTodo: function(item) {
       this.cacheTodo = item;
