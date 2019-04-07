@@ -110,7 +110,7 @@
 
 <div id="app">
   <h4>物件寫法</h4>
-  <div class="box"></div>
+  <div class="box" :class="{'rotate': isTransform, 'bg-danger': boxColor}"></div> <!--rotate 這個 class 存在與否取決於數據屬性 isTransform 的 True 或 False--> 
   <p>請為此元素加上動態 className</p>
   <hr>
   <button class="btn btn-outline-primary" v-on:click="isTransform = !isTransform">選轉物件</button>
@@ -120,35 +120,35 @@
   </div>
   <hr>
   <h5>物件寫法 2</h5>
-  <div class="box"></div>
+  <div class="box" :class="objectClass"></div> <!-- 同上，這是將物件詳細內容寫在script裡面的方法，但可能比較少見 -->
   <p>請將此範例改為 "物件" 寫法</p>
   <hr>
-  <button class="btn btn-outline-primary">選轉物件</button>
+  <button class="btn btn-outline-primary" @click="objectClass.rotate = !objectClass.rotate">選轉物件</button>
   <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="classToggle2">
+    <input type="checkbox" class="form-check-input" id="classToggle2" v-model="objectClass['bg-danger']"> <!-- 不是用 objectClass.bg-danger 是因為有橫線 - 的緣故，用中括號與單引號改變寫法，否則可能會跳錯甚至無法運行，不然就是物件命名就避免橫線。-->
     <label class="form-check-label" for="classToggle2">切換色彩</label>
   </div>
   <hr>
   <h4>陣列寫法</h4>
-  <button class="btn">請操作本元件</button>
+  <button class="btn " :class="arrayClass">請操作本元件</button>
   <p>請用陣列呈現此元件 className</p>
   <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="classToggle3">
+    <input type="checkbox" class="form-check-input" id="classToggle3" v-model="arrayClass" value="btn-outline-primary">
     <label class="form-check-label" for="classToggle3">切換樣式</label>
   </div>
   <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="classToggle4">
+    <input type="checkbox" class="form-check-input" id="classToggle4" v-model="arrayClass" value="active">
     <label class="form-check-label" for="classToggle4">啟用元素狀態</label>
   </div>
   <hr>
   <h4>綁定行內樣式</h4>
   <p>請用不同方式綁定以下行內樣式</p>
-  <div class="box"></div>
-  <div class="box"></div>
-  <div class="box"></div>
+  <div class="box" :style="{backgroundColor: 'red'}"></div>
+  <div class="box" :style="styleObject"></div>
+  <div class="box" :style="[{backgroundColor: 'red'}, {borderWidth: '10px'}]"></div>
   <hr>
   <h5>自動加上 Prefix (每個版本結果不同)</h5>
-  <div class="box"></div>
+  <div class="box" :style="styleObject3"></div>
 </div>
 
 <script>
@@ -163,7 +163,7 @@ var app = new Vue({
     },
 
     // Array 操作
-    arrayClass: [],
+    arrayClass: ['btn-outline-primary', 'active'], // 把 classname 都寫進 Array 裡
 
     // 行內樣式
     // 使用駝峰式命名
