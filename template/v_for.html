@@ -157,13 +157,22 @@
   <h4>Template 的運用</h4>
   <p>請將兩個 tr 一組使用 v-for</p>
   <table class="table">
-    
+    <template v-for="item in arrayData"> 
+      <!--HTML内容模板（<template>）元素是一种用于保存客户端内容机制，该内容在加载页面时不会呈现，
+      但随后可以在运行时使用JavaScript实例化。将模板视为一个内容片段，存储在文档中供后续使用。
+      虽然解析器在加载页面时确实会处理<template>元素的内容，但这样做只是为了确保这些内容有效；
+      然而，元素的内容不会被呈现。-->
+      <tr>
+        <td>{{item.age}}</td>
+      </tr>
+      <tr>
+        <td>{{item.name}}</td>
+      </tr>
+    </template> 
   </table>
-
-  <h4>v-for 與 v-if</h4>
-  <p>請加上 v-if 判斷式</p>
+  <p>請加上 v-if 判斷式</p> <!-- v-for 跟 v-if 寫在一起的時候，會先執行 v-for 再執行 v-if 判斷式。-->
   <ul>
-    <li v-for="(item, key) in arrayData">
+    <li v-for="(item, key) in arrayData" v-if="item.age <= 19">
       {{ key }} - {{ item.name }} {{ item.age }} 歲
     </li>
   </ul>
@@ -171,9 +180,9 @@
   <h4>v-for 與 元件</h4>
   <p>講師說明</p>
   <ul>
-    <list-item :item="item" v-for="(item, key) in arrayData"></list-item>
+    <list-item :item="item" v-for="(item, key) in arrayData" :key="item.age"></list-item>
   </ul>
-  <p>注意：現在建議元件使用 v-for 都加上 key。<a href="https://cn.vuejs.org/v2/guide/list.html#%E4%B8%80%E4%B8%AA%E7%BB%84%E4%BB%B6%E7%9A%84-v-for">參考</a></p>
+  <p>注意：現在建議元件 Vue.component 使用 v-for 都加上 v-bind:key。<a href="https://cn.vuejs.org/v2/guide/list.html#%E4%B8%80%E4%B8%AA%E7%BB%84%E4%BB%B6%E7%9A%84-v-for">參考</a></p>
 </div>
 
 <script>
