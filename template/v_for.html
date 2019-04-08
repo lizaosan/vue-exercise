@@ -140,7 +140,7 @@
 
   <h4>不能運作的狀況</h4>
   <p>講師說明</p>
-  <button class="btn btn-outline-primary">無法運行</button>
+  <button class="btn btn-outline-primary" @click="cantWork">無法運行</button>
   <ul>
     <li v-for="(item, key) in arrayData" :key="item.age">
       {{ key }} - {{ item.name }} {{ item.age }} 歲 <input type="text">
@@ -237,26 +237,30 @@ var app = new Vue({
 
       
       vm.filterArray = vm.arrayData.filter(function (item) {
-        // console.log(vm.filterText, item.name, item.name.match(vm.filterText))
+        console.log(vm.filterText, item.name, item.name.match(vm.filterText))
         return item.name.match(vm.filterText);
       });
     },
-    // cantWork: function () {
-    //   // // 情境一
-    //   // this.arrayData.length = 2;
+    cantWork: function () {
+      // // 情境一
+      this.arrayData.length = 0; // 畫面上無法把陣列清空
 
-    //   // // 情境二
-    //   // this.arrayData[0] = {
-    //   //   name: '阿強',
-    //   //   age: 99
-    //   // }
-    //   // 解法
-    //   // Vue.set(this.arrayData, 0, {
-    //   //   name: '阿強',
-    //   //   age: 99
-    //   // })
-    //   console.log(this.arrayData)
-    // }
+      // // 情境二
+      this.arrayData[0] = {
+        name: '阿強',
+        age: 99
+      } // 畫面上無法把小明變成阿強
+
+      // 要操作陣列裡面的資料內容，不能用索引的方法來操作
+      // 要操作必須使用 Vue.set() ，將資料寫入 Vue 的 Data 裡面，重新可以被監控
+
+      // 解法
+      Vue.set(this.arrayData, 0, {
+        name: '阿強',
+        age: 99
+      })
+      console.log(this.arrayData)
+    }
   }
 });
 </script>
