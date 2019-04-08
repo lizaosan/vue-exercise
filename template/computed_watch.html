@@ -148,7 +148,7 @@ var app = new Vue({
     trigger: false,
     newDate: 0
   },
-  computed: {
+  computed: { // https://cn.vuejs.org/v2/guide/computed.html#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E7%BC%93%E5%AD%98-vs-%E6%96%B9%E6%B3%95 補充
     filterArray: function() {
       var vm = this;
       return vm.arrayData.filter(function(item) {
