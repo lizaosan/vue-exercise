@@ -119,7 +119,7 @@
     <thead>
       <tr>
         <th>品名</th>
-        <th class="click">價格 
+        <th class="click" @click="priceOrder">價格 
           <!-- isReverse 為反轉 className -->
           <span class="icon isReverse">
             <i class=" fas fa-angle-up text-success"></i>
@@ -128,11 +128,14 @@
         <th class="click">到期日 
         </th>
       </tr>
-      <tr v-for="item in data">
-        <td>{{ item.name }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.expiryDate }}</td>
-      </tr>
+      <template  v-for="(item,key) in sortArray"> 
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.expiryDate }}</td>
+        </tr>
+      </template>
+
     </thead>
   </table>
 </div>
@@ -178,12 +181,38 @@ var app = new Vue({
         name: '金殺 巧粒粒',
         price: 120,
         expiryDate: 200
-      }
+      },
     ],
+    order: -1,
   },
   // 請在此撰寫 JavaScript
-  computed: {}
+  computed: {
+    sortArray: function() {
+      var vm = this;
+      return vm.data;
+    },
+  },
+  methods: {
+    priceOrder: function() {
+      function compare(a, b){
+        var a = a.price;
+        var b = b.price;
+        return (a === b ? 0 : a > b ? 1 : -1) * this.order ;
+      }
+      return this.data.sort(compare);
+    }
+  }
 });
+
+// // 參考
+// function compare(a, b){
+//   if (a.price < b.price)
+//     return -1;
+//   if (a.price > b.price)
+//     return 1;
+//   return 0;
+// }
+// return this.data.sort(compare);
 </script>
 
 <style>
@@ -203,9 +232,10 @@ var app = new Vue({
 }
 </style>
 
- 
+
         </div>
       </div>
     </div>
   </body>
 </html>
+
