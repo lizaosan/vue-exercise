@@ -121,11 +121,20 @@
         <th>品名</th>
         <th class="click" @click="priceOrder">價格 
           <!-- isReverse 為反轉 className -->
-          <span class="icon isReverse">
+          <span class="icon inverse" v-if="order > 0">
+            <i class=" fas fa-angle-up text-success"></i>
+          </span>
+          <span class="icon" v-else-if="order < 0">
             <i class=" fas fa-angle-up text-success"></i>
           </span>
         </th>
-        <th class="click">到期日 
+        <th class="click" @click="expiryDateOrder">到期日 
+          <span class="icon inverse" v-if="order > 0">
+            <i class=" fas fa-angle-up text-success"></i>
+          </span>
+          <span class="icon" v-else-if="order < 0">
+            <i class=" fas fa-angle-up text-success"></i>
+          </span>
         </th>
       </tr>
       <template  v-for="(item,key) in sortArray"> 
@@ -194,10 +203,22 @@ var app = new Vue({
   },
   methods: {
     priceOrder: function() {
+      var vm = this;
+      vm.order = vm.order * -1;
       function compare(a, b){
         var a = a.price;
         var b = b.price;
-        return (a === b ? 0 : a > b ? 1 : -1) * this.order ;
+        return (a === b ? 0 : a > b ? 1 : -1) * vm.order ;
+      }
+      return this.data.sort(compare);
+    },
+    expiryDateOrder: function() {
+      var vm = this;
+      vm.order = vm.order * -1;
+      function compare(a, b){
+        var a = a.expiryDate;
+        var b = b.expiryDate;
+        return (a === b ? 0 : a > b ? 1 : -1) * vm.order ;
       }
       return this.data.sort(compare);
     }
