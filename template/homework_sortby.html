@@ -208,7 +208,14 @@ var app = new Vue({
       function compare(a, b){
         var a = a.price;
         var b = b.price;
-        return (a === b ? 0 : a > b ? 1 : -1) * vm.order ;
+        if (a === b){
+          return 0 * vm.order;
+        } else if (a > b) {
+          return 1 * vm.order;
+        } else {
+          return -1 * vm.order;
+        }
+        // return (a === b ? 0 : a > b ? 1 : -1) * vm.order ;
       }
       return this.data.sort(compare);
     },
@@ -218,7 +225,14 @@ var app = new Vue({
       function compare(a, b){
         var a = a.expiryDate;
         var b = b.expiryDate;
-        return (a === b ? 0 : a > b ? 1 : -1) * vm.order ;
+        if (a === b){
+          return 0 * vm.order;
+        } else if (a > b) {
+          return 1 * vm.order;
+        } else {
+          return -1 * vm.order;
+        }
+        // return (a === b ? 0 : a > b ? 1 : -1) * vm.order ;
       }
       return this.data.sort(compare);
     }
