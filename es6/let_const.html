@@ -106,13 +106,19 @@
 <script>
 // #1
 // 修改 var -> let
-var mom = '老媽';
-(function () {
-  console.log(mom);
-})();
+// console.log(mom);
+// var mom = '老媽';
+// (function () {
+//   console.log(mom);
+// })();
+
+// undefined 記憶體有準備位置但沒有東西傳入
+// not defined 記憶體連位置都沒有準備
 
 // #2
 // 修改 var -> let
+// var 作用域 function scope
+// let 作用域 block 
 // function varMing () {
 //   var ming = '小明';
 //   if (true) {
@@ -125,7 +131,7 @@ var mom = '老媽';
 
 // #3
 // 修改 var -> let
-// for (var i = 0; i < 10; i++) {
+// for (var i = 0; i < 10; i++) { 
 //   console.log(i);
 //   setTimeout(function () {
 //     console.log('這執行第' + i + '次');
@@ -133,26 +139,69 @@ var mom = '老媽';
 // }
 
 // #4
-// const
+// const 宣告一個常數，不能再被 var 或 let 更換的
 // const ming = '鐵錚錚男子漢';
 
 // #5
 // const 與 物件
-// const family = {
-//   mom: '老媽',
-//   me: '小明',
-//   sister: '小橙'
-// };
-// family.father = '爸爸';
+// const 雖然不能被更換，但是元素內的屬性是可以被更換的
+const family = {
+  mom: '老媽',
+  me: '小明',
+  sister: '小橙'
+};
+family.father = '爸爸';
+// 物件，本身是傳參考
 
 // #6
 // 額外問題，不使用 let，上述答案如何解答
-// for (var i = 0; i < 10; i++) {
-//   console.log(i);
-//   setTimeout(function () {
-//     console.log('這執行第' + i + '次');
-//   }, 10);
-// }
+
+//Functions Expressions 函式表示式
+for (var i = 0; i < 10; i++) {
+  console.log(i);
+  setTimeout(function () {
+    console.log('這執行第' + i + '次');
+  }, 10);
+};
+
+//Immediately Invoked Functions Expressions (IIFE)
+for (var i = 0; i < 10; i++) {
+  (function (ahegao){
+    setTimeout(function (){
+      console.log('這被立早執行第' + ahegao + '次');
+    }, 10);
+  })(i);
+};
+
+//Functions Expressions 函式表示式
+for ( i = 0; i < 5; i++){
+　document.write(i + ' ');
+};
+
+//Immediately Invoked Functions Expressions (IIFE)
+for ( i = 5; i < 11; i++) {
+  (function (){
+　  document.write(i + ' ');
+  })(i);
+}
+
+// var hello = function(name){
+// 	console.log('Hello ' + name);
+// }('Lizao');
+
+// var hello2 = function(name){
+// 	return 'Hello ' + name
+// };
+// console.log(hello2); //函式結尾的 } 後面沒有 () 表示立即執行，所以console.log印出hello2時，是印出hello2指向的函式
+
+// var hello2editted = function(name){
+//   console.log('Hello ' + name);
+// }('Lizao Editted');
+
+// (function(food){
+// 	console.log('大俠愛吃' + food)
+// }('漢堡包'));
+
 </script> 
         </div>
       </div>
